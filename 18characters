@@ -1,4 +1,4 @@
-## 全体のパス経路長
+##1 全体のパス経路長
 import numpy as np
 
 # パス経路のすべての位置（(x, y)のリスト）を取得
@@ -15,7 +15,7 @@ for i in range(1, len(path_points)):
 
 
 
-##パス距離の比率
+##2パス距離の比率
 # パスイベントのみを取得
 pass_events = possession_data[possession_data['event_type'] == 'pass']
 
@@ -33,7 +33,7 @@ ratio_of_passing_length = pass_length / overall_path_length
 
 
 
-##シュート距離
+##3シュート距離
 # ゴールの座標（例として、ピッチの右端中央をゴールとする）
 goal_x = 105  # ピッチの長さ（単位：メートル）
 goal_y = 34   # ピッチの幅の中央（68mの半分）
@@ -50,7 +50,7 @@ shot_distance = np.sqrt(dx**2 + dy**2)
 
 
 
-## スタート距離 
+##4 スタート距離 
 start_x = path_points[0][0]
 start_y = path_points[0][1]
 
@@ -62,7 +62,7 @@ start_distance = np.sqrt(dx**2 + dy**2)
 
 
 
-##平均距離 
+##5平均距離 
 distances = []
 for point in path_points:
     dx = point[0] - goal_x
@@ -75,20 +75,20 @@ average_distance = np.mean(distances)
 
 
 
-##Xレンジ
+##6Xレンジ
 x_values = path_points[:, 0]
 x_range = x_values.max() - x_values.min()
 
 
 
 
-##Yレンジ
+##7Yレンジ
 y_values = path_points[:, 1]
 y_range = y_values.max() - y_values.min()
 
 
 
-##移動の直進性
+##8移動の直進性
 dx = path_points[-1][0] - path_points[0][0]
 dy = path_points[-1][1] - path_points[0][1]
 straight_line_distance = np.sqrt(dx**2 + dy**2)
@@ -97,32 +97,32 @@ moving_directness = straight_line_distance / overall_path_length
 
 
 
-##ポゼッションタイム
+##9ポゼッションタイム
 start_time = possession_data['timestamp'].iloc[0]
 end_time = possession_data['timestamp'].iloc[-1]
 possession_time = end_time - start_time
 
 
 
-##全体の移動速度
+##10全体の移動速度
 overall_moving_speed = overall_path_length / possession_time
 
 
 
-##直線速度
+##11直線速度
 direct_speed = straight_line_distance / possession_time
 
 
 
 
-##パス比率
+##12パス比率
 number_of_passes = len(pass_events)
 passing_ratio = number_of_passes / possession_time
 
 
 
 
-##ショットインデックス
+##13ショットインデックス
 import pandas as pd
 
 # フィールドをゾーンに分割
@@ -158,7 +158,7 @@ shot_index = np.divide(goal_counts, shot_counts, out=np.zeros_like(goal_counts),
 
 
 
-##加速度インデックス
+##14加速度インデックス
 # シュート位置のゾーンを特定
 shot_x = shot_event['start_x']
 shot_y = shot_event['start_y']
@@ -178,7 +178,7 @@ acceleration_index = shooting_area_shot_index / (possession_time ** 2)
 
 
 
-##攻撃強度
+##15攻撃強度
 total_shot_index = 0
 for point in path_points:
     x = point[0]
@@ -197,7 +197,7 @@ attack_intensity = total_shot_index / possession_time
 
 
 
-##プレイヤー数
+##16プレイヤー数
 # パス経路内のすべてのイベントを取得
 possession_events = possession_data
 
@@ -210,7 +210,7 @@ number_of_players = len(players_involved)
 
 
 
-##パスアクションの集中度
+##17パスアクションの集中度
 import pandas as pd
 
 # パス経路内のパスイベントを取得
@@ -240,7 +240,7 @@ centralization_of_passing_actions = numerator / denominator if denominator != 0 
 
 
 
-##ポゼッションタイムの集中度
+##18ポゼッションタイムの集中度
 # 各プレイヤーのボール保持時間を計算（イベントの持続時間の合計）
 possession_time_by_player = possession_events.groupby('player_id')['event_duration'].sum()
 
